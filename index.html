@@ -1,92 +1,403 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trânsito no Estado do Paraná</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Armarinhos Beaba · Aviamentos e armarinho em SP</title>
+  <!-- Bootstrap 5 + Icons + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header { background: #006600; color: white; padding: 20px; text-align: center; }
-    nav { background: #004d00; padding: 10px; text-align: center; }
-    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
-    section { padding: 20px; }
-    .container { max-width: 1000px; margin: auto; }
-    .image { width: 100%; height: auto; margin: 10px 0; }
-    footer { background: #222; color: white; text-align: center; padding: 15px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fefaf5;
+      color: #2c2a29;
+      scroll-behavior: smooth;
+    }
+
+    /* paleta inovadora e aconchegante (tons terrosos + toque coral) */
+    :root {
+      --beige-light: #fff3e8;
+      --clay-coral: #e77b5e;
+      --warm-brown: #b96f4a;
+      --deep-charcoal: #2e2a28;
+      --sand: #f5e6da;
+      --cream: #fffaf5;
+    }
+
+    .bg-warm-light {
+      background-color: var(--beige-light);
+    }
+    .bg-sand {
+      background-color: var(--sand);
+    }
+    .text-clay {
+      color: var(--clay-coral);
+    }
+    .btn-clay {
+      background-color: var(--clay-coral);
+      border: none;
+      color: white;
+      transition: all 0.25s ease;
+    }
+    .btn-clay:hover {
+      background-color: #c45f45;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(231, 123, 94, 0.25);
+      color: white;
+    }
+    .btn-outline-clay {
+      border: 2px solid var(--clay-coral);
+      color: var(--clay-coral);
+      background: transparent;
+    }
+    .btn-outline-clay:hover {
+      background-color: var(--clay-coral);
+      color: white;
+    }
+    .section-title {
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      border-left: 5px solid var(--clay-coral);
+      padding-left: 1rem;
+      margin-bottom: 2rem;
+    }
+    .card-hover {
+      transition: all 0.25s ease-in-out;
+      border: none;
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 26px -8px rgba(0,0,0,0.05);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 36px -12px rgba(0,0,0,0.12);
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #fff3e8 0%, #fae6da 100%);
+    }
+    .footer {
+      background-color: #2e2a28;
+      color: #e7dfd9;
+    }
+    .info-card {
+      background: rgba(255,255,245,0.75);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+    }
+    .navbar-beaba {
+      background-color: rgba(255, 243, 232, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+    .nav-link {
+      font-weight: 500;
+      color: #4a3b32 !important;
+    }
+    .nav-link:hover {
+      color: var(--clay-coral) !important;
+    }
+    .img-cover-placeholder {
+      background-color: #e6d7cc;
+      border-radius: 2rem;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b96f4a" width="60px" height="60px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 80px;
+    }
+    @media (min-width: 768px) {
+      .hero-text {
+        padding-right: 2rem;
+      }
+    }
+    .icon-feature {
+      font-size: 2.4rem;
+      color: var(--clay-coral);
+    }
+    hr {
+      opacity: 0.3;
+      background-color: var(--warm-brown);
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Trânsito no Estado do Paraná</h1>
-  <p>Dados, estatísticas e informações sobre segurança viária e mobilidade</p>
-</header>
+  <!-- Navegação simples e clean -->
+  <nav class="navbar navbar-expand-lg navbar-beaba sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-3" href="#" style="color: #c45f45;">
+        <i class="bi bi-scissors me-2"></i>Armarinhos Beaba
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+          <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="#produtos">Diferenciais</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+        </ul>
+        <a href="#contato" class="btn btn-clay ms-lg-3 rounded-pill px-4">Fale conosco <i class="bi bi-whatsapp ms-1"></i></a>
+      </div>
+    </div>
+  </nav>
 
-<nav>
-  <a href="#estatisticas">Estatísticas</a>
-  <a href="#infraestrutura">Infraestrutura</a>
-  <a href="#acoes">Ações</a>
-  <a href="#seguranca">Segurança</a>
-  <a href="#contatos">Contatos</a>
-</nav>
+  <!-- Hero / Banner principal -->
+  <section id="home" class="hero-gradient pt-5 pb-5">
+    <div class="container py-4 py-md-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 hero-text">
+          <span class="badge bg-warning-subtle text-dark-emphasis rounded-pill px-3 py-2 mb-3" style="background: #f7ddd0; color:#b45f3a;"><i class="bi bi-star-fill me-1"></i> Tradição em armarinho desde 2020</span>
+          <h1 class="display-4 fw-bold lh-1 mb-3" style="color: #2f2a27;">Criatividade, <span class="text-clay">linhas & agulhas</span> que transformam</h1>
+          <p class="lead mb-4">Especialistas em aviamentos, retalhos, tecidos e acessórios para costura criativa. Seu projeto merece materiais de qualidade no coração do Bom Retiro.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#contato" class="btn btn-clay rounded-pill px-5 py-3 fw-semibold"><i class="bi bi-envelope-paper-fill me-2"></i>Solicitar orçamento</a>
+            <a href="#sobre" class="btn btn-outline-clay rounded-pill px-5 py-3 fw-semibold"><i class="bi bi-arrow-right-circle"></i> Conhecer loja</a>
+          </div>
+          <div class="row mt-5 g-3">
+            <div class="col-6 col-md-4">
+              <div class="d-flex align-items-center gap-2"><i class="bi bi-truck fs-4 text-clay"></i><span class="small fw-semibold">Pronta entrega</span></div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="d-flex align-items-center gap-2"><i class="bi bi-shield-check fs-4 text-clay"></i><span class="small fw-semibold">Produtos 100% originais</span></div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="d-flex align-items-center gap-2"><i class="bi bi-cash-stack fs-4 text-clay"></i><span class="small fw-semibold">Preço justo · Atacado e varejo</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="rounded-4 overflow-shadow position-relative">
+            <div class="img-cover-placeholder w-100"></div>
+            <div class="position-absolute bottom-0 end-0 bg-white rounded-3 p-2 m-3 shadow-sm small">✂️ Tecidos · Linhas · Botões</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="estatisticas" class="container">
-  <h2>📊 Estatísticas de Trânsito no Paraná</h2>
-  <img src="https://example.com/estatisticas-transito-pr.jpg" alt="Gráfico de estatísticas de trânsito" class="image">
-  <p>
-    Em 2025, foram registrados **7.620 acidentes nas rodovias federais do Paraná**, resultando em **8.523 feridos e 593 mortes**. Isso representou uma pequena redução de 2,3% no número de óbitos em comparação com 2024, embora os acidentes tenham aumentado levemente. :contentReference[oaicite:1]{index=1}
-  </p>
-  <p>
-    O Departamento de Trânsito do Paraná (Detran-PR) disponibiliza uma página com **estatísticas detalhadas** que permitem consultar dados por município, faixa etária, tipo de infração, entre outros. :contentReference[oaicite:2]{index=2}
-  </p>
-</section>
+  <!-- Seção Sobre a empresa + Dados oficiais -->
+  <section id="sobre" class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <span class="text-clay text-uppercase small fw-semibold tracking-wide"><i class="bi bi-building"></i> Sobre nós</span>
+          <h2 class="display-6 fw-bold mt-2">Armarinhos que conectam ideias e criações</h2>
+          <p class="mt-3 fs-5">No coração do Bom Retiro, a <strong>Armarinhos Beaba LTDA</strong> é referência em aviamentos, tecidos e acessórios para costura criativa. Seja para pequenos reparos ou grandes produções, oferecemos variedade, qualidade e atendimento especializado.</p>
+          <div class="row mt-4 g-3">
+            <div class="col-sm-6">
+              <div class="d-flex gap-3"><i class="bi bi-pin-map-fill fs-3 text-clay"></i><div><strong>Loja física</strong><br>Rua Newton Prado, 246 - Bom Retiro, São Paulo - SP</div></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex gap-3"><i class="bi bi-calendar-check fs-3 text-clay"></i><div><strong>Fundada em 2020</strong><br>5 anos de história e crescimento constante</div></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex gap-3"><i class="bi bi-briefcase fs-3 text-clay"></i><div><strong>CNAE Principal</strong><br>47.55-5-02 (Comércio varejista artigos armarinho)</div></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex gap-3"><i class="bi bi-credit-card-2-front fs-3 text-clay"></i><div><strong>CNPJ</strong><br>38.374.317/0001-60</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm p-4 rounded-4 bg-sand">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <i class="bi bi-patch-check-fill fs-1 text-clay"></i>
+              <h4 class="mb-0 fw-semibold">Empresa Ativa · Simples Nacional</h4>
+            </div>
+            <hr>
+            <p><i class="bi bi-check-circle-fill text-clay me-2"></i> Situação cadastral: <strong>Ativa</strong> (Receita Federal)</p>
+            <p><i class="bi bi-geo-alt-fill text-clay me-2"></i> Inscrição Estadual SP: 129.640.834.113</p>
+            <p><i class="bi bi-people-fill text-clay me-2"></i> Sócio-administrador: Suzi Park</p>
+            <p><i class="bi bi-building-fill-up text-clay me-2"></i> Capital social: R$ 10.000,00 · Microempresa</p>
+            <div class="alert alert-light mt-3 rounded-4" role="alert">
+              <i class="bi bi-info-circle-fill me-2 text-clay"></i> Desde 2020 oferecendo soluções para costureiras, artesãs e pequenos negócios.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="infraestrutura" class="container">
-  <h2>🛣️ Infraestrutura e Condições das Rodovias</h2>
-  <img src="https://example.com/rodovias-parana.jpg" alt="Rodovia no Paraná" class="image">
-  <p>
-    O Paraná tem feito investimentos contínuos na melhoria de suas rodovias. Em 2024, **71% das rodovias pavimentadas** foram classificadas em condições “boas ou muito boas”, o melhor resultado desde 2002. :contentReference[oaicite:3]{index=3}
-  </p>
-  <p>
-    Esses investimentos ajudam a reduzir custos logísticos e melhorar a segurança viária, beneficiando tanto o transporte de cargas quanto o deslocamento de passageiros.
-  </p>
-</section>
+  <!-- Diferenciais / Produtos e serviços (inovadores) -->
+  <section id="produtos" class="py-5 bg-warm-light">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-white text-dark rounded-pill px-4 py-2 shadow-sm"><i class="bi bi-gem me-1"></i> O que oferecemos</span>
+        <h2 class="display-6 fw-bold mt-3">Inspiração para cada <span class="text-clay">ponto criativo</span></h2>
+        <p class="lead w-75 mx-auto">Mix completo de aviamentos, tecidos e assessórios para costura criativa, moda e artesanato.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-hover h-100 p-4 text-center rounded-4">
+            <i class="bi bi-scissors icon-feature"></i>
+            <h5 class="mt-3 fw-bold">Tecidos e Retalhos</h5>
+            <p class="text-muted">Algodão, linho, malhas, sarja e retalhos exclusivos para pequenos projetos e patchwork.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-hover h-100 p-4 text-center rounded-4">
+            <i class="bi bi-brightness-alt-high icon-feature"></i>
+            <h5 class="mt-3 fw-bold">Aviamentos premium</h5>
+            <p class="text-muted">Botões, zíperes, ilhoses, fitas, rendas, elásticos e tudo para acabamento perfeito.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-hover h-100 p-4 text-center rounded-4">
+            <i class="bi bi-cup-straw icon-feature"></i>
+            <h5 class="mt-3 fw-bold">Linhas e Agulhas</h5>
+            <p class="text-muted">Linhas de algodão, poliéster, agulhas manuais e máquina para costura profissional.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card card-hover h-100 p-4 text-center rounded-4">
+            <i class="bi bi-gift-fill icon-feature"></i>
+            <h5 class="mt-3 fw-bold">Kits criativos</h5>
+            <p class="text-muted">Kits prontos para bordado, feltro e patchwork. Perfeito para iniciantes e artesãos.</p>
+          </div>
+        </div>
+      </div>
+      <!-- frase motivacional -->
+      <div class="text-center mt-5 pt-4">
+        <div class="bg-white p-4 rounded-5 shadow-sm d-inline-block px-md-5">
+          <i class="bi bi-quote fs-1 text-clay"></i>
+          <p class="fs-4 fst-italic mb-0">"Costurar é transformar fios em histórias. Na Beaba, você encontra os melhores materiais para contar a sua."</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="acoes" class="container">
-  <h2>📌 Ações e Planos para Segurança no Trânsito</h2>
-  <img src="https://example.com/seguranca-transito-pr.jpg" alt="Ação de fiscalização policial" class="image">
-  <p>
-    O Paraná foi o **primeiro estado do Brasil a concluir um Plano Estadual de Segurança no Trânsito (PETRANS-PR)**, com meta de reduzir em 50% as mortes no trânsito até 2030, reforçando ações de educação, engenharia viária e governança. :contentReference[oaicite:4]{index=4}
-  </p>
-  <p>
-    Em consulta pública, a sociedade pode participar sugerindo melhorias no plano, destacando a importância da contribuição coletiva para um trânsito mais seguro. :contentReference[oaicite:5]{index=5}
-  </p>
-</section>
+  <!-- Diferencial de localização + Atendimento humanizado -->
+  <section class="py-5 bg-white">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-6 order-md-2">
+          <div class="rounded-4 overflow-hidden shadow">
+            <div class="img-cover-placeholder" style="background-image: none; background-color: #e2cfbe; min-height: 280px; display: flex; align-items: center; justify-content: center;">
+              <i class="bi bi-shop fs-1 text-dark-emphasis" style="font-size: 4rem; color:#b96f4a;"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 order-md-1">
+          <h3 class="fw-bold">📍 Bom Retiro – Tradição e comércio dinâmico</h3>
+          <p class="fs-5">Estamos localizados na <strong>Rua Newton Prado, 246</strong>, uma das principais ruas comerciais do Bom Retiro. Fácil acesso, estacionamento próximo e um atendimento personalizado que torna a experiência de compra única.</p>
+          <div class="d-flex gap-4 mt-4 flex-wrap">
+            <div><i class="bi bi-clock-history text-clay fs-4"></i><br><strong>Horário</strong><br>Seg–Sex: 9h–18h | Sáb: 9h–14h</div>
+            <div><i class="bi bi-whatsapp text-clay fs-4"></i><br><strong>Whatsapp</strong><br>(11) 2892-6481</div>
+            <div><i class="bi bi-envelope text-clay fs-4"></i><br><strong>E-mail rápido</strong><br>contato@armarinhosbeaba.com.br</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="seguranca" class="container">
-  <h2>🚨 Fiscalização e Segurança Viária</h2>
-  <img src="https://example.com/acao-policial-transito.jpg" alt="Fiscalização de trânsito" class="image">
-  <p>
-    Durante períodos de maior movimento, como o Ano-Novo, a Polícia Militar do Paraná (PMPR) intensifica a fiscalização nas rodovias, registrando milhares de infrações e garantindo maior segurança nas estradas estaduais. :contentReference[oaicite:6]{index=6}
-  </p>
-  <p>
-    A Brigada Militar Rodoviária (BPRv) tem atuado com radares portáteis, testes de etilômetro e apreensões para coibir infrações como excesso de velocidade e embriaguez ao volante. :contentReference[oaicite:7]{index=7}
-  </p>
-</section>
+  <!-- Seção Contato + mapa fictício com localização interativa -->
+  <section id="contato" class="py-5 bg-sand">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold">Vamos criar juntos? <i class="bi bi-chat-heart text-clay"></i></h2>
+        <p class="lead">Entre em contato, tire dúvidas ou faça um pedido personalizado. Sua criação merece nossos aviamentos.</p>
+      </div>
+      <div class="row g-5">
+        <div class="col-md-5">
+          <div class="bg-white p-4 rounded-4 shadow-sm h-100">
+            <h4 class="fw-bold mb-3"><i class="bi bi-envelope-paper me-2 text-clay"></i> Fale com a gente</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><i class="bi bi-envelope-fill text-clay me-3"></i> <strong>E-mail:</strong> contato@armarinhosbeaba.com.br</li>
+              <li class="mb-3"><i class="bi bi-telephone-fill text-clay me-3"></i> <strong>Telefone:</strong> (11) 2892-6481</li>
+              <li class="mb-3"><i class="bi bi-geo-alt-fill text-clay me-3"></i> <strong>Endereço:</strong> Rua Newton Prado, 246, Bom Retiro - São Paulo, SP, CEP 01127-000</li>
+            </ul>
+            <hr>
+            <p class="small text-muted mt-2"><i class="bi bi-truck"></i> Entregamos para toda Grande SP e também enviamos para todo Brasil via Correios.</p>
+            <div class="mt-4 d-flex gap-2">
+              <a href="#" class="btn btn-outline-secondary rounded-pill w-50"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+              <a href="#" class="btn btn-clay rounded-pill w-50"><i class="bi bi-send"></i> Enviar e-mail</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="bg-white p-4 rounded-4 shadow-sm h-100">
+            <h5 class="fw-semibold mb-3"><i class="bi bi-pin-map-fill text-clay"></i> Como chegar — Bom Retiro</h5>
+            <div class="rounded-4 overflow-hidden bg-light p-3 text-center" style="height: 240px; background: #dccfc4;">
+              <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                <i class="bi bi-map fs-1 text-secondary"></i>
+                <p class="mt-2 fw-semibold">Rua Newton Prado, 246 — Próximo ao Metrô Tiradentes</p>
+                <p class="small text-muted">Referência: Entre as ruas Ribeiro de Lima e Rodrigues dos Santos. Estacionamento rotativo nas proximidades.</p>
+                <span class="badge bg-clay-light text-dark p-2 rounded-pill"><i class="bi bi-bus-front"></i> Ônibus 701A, 874T, 971M</span>
+              </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-between small text-muted">
+              <span><i class="bi bi-building"></i> Loja física com ampla variedade</span>
+              <span><i class="bi bi-credit-card"></i> Débito, crédito e PIX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="contatos" class="container">
-  <h2>📞 Contatos e Serviços Úteis</h2>
-  <ul>
-    <li><strong>Detran-PR:</strong> Atendimento e serviços de habilitação e veículos</li>
-    <li><strong>PRF (Polícia Rodoviária Federal):</strong> Fiscalização das rodovias federais</li>
-    <li><strong>BPRv (Batalhão de Polícia Rodoviária):</strong> Ações de segurança e fiscalização nas estradas estaduais</li>
-  </ul>
-  <p>Consulte sempre os canais oficiais para informações atualizadas e emergências no trânsito.</p>
-</section>
+  <!-- Rodapé completo e estruturado -->
+  <footer class="footer pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-3"><i class="bi bi-scissors me-2"></i> Armarinhos Beaba</h5>
+          <p class="small">Comércio varejista de artigos de armarinho, tecidos e aviamentos. Qualidade e tradição no Bom Retiro desde 2020.</p>
+          <p class="small"><strong>CNPJ:</strong> 38.374.317/0001-60<br><strong>IE SP:</strong> 129.640.834.113<br><strong>Simples Nacional · ME</strong></p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-3">Atendimento</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Rua Newton Prado, 246 - Bom Retiro, São Paulo - SP</li>
+            <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@armarinhosbeaba.com.br</li>
+            <li class="mb-2"><i class="bi bi-telephone me-2"></i> (11) 2892-6481</li>
+            <li class="mb-2"><i class="bi bi-calendar-week me-2"></i> Seg–Sex 9h–18h | Sáb 9h–14h</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-bold text-white mb-3">Informações legais</h5>
+          <p class="small">Empresa regular, ativa desde 08/09/2020. Situação cadastral: ATIVA na Receita Federal. Política de privacidade e trocas conforme CDC.</p>
+          <div class="mt-2">
+            <a href="#" class="text-white-50 me-3"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="#" class="text-white-50 me-3"><i class="bi bi-facebook fs-5"></i></a>
+            <a href="#" class="text-white-50"><i class="bi bi-whatsapp fs-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-4 opacity-25">
+      <div class="text-center small pt-2 text-white-50">
+        © 2026 Armarinhos Beaba LTDA · Todos os direitos reservados · Feito com criatividade e tecido.
+      </div>
+    </div>
+  </footer>
 
-<footer>
-  <p>&copy; 2026 Trânsito no Paraná | Informações de Saúde e Segurança Viária</p>
-</footer>
-
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- pequeno script para links suaves -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if(href === "#" || href === "") return;
+        const target = document.querySelector(href);
+        if(target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
